@@ -1,0 +1,61 @@
+﻿@using Core.Models
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<Team>
+@{
+    int counter = 1;
+}
+<div class="container">
+    <div class="row">
+        <div class="col-4 mb-3">
+            <a asp-action="Create" asp-controller="Team" class="btn btn-primary">Create Team</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Id</th>
+                        <th scope="col">FullName</th>
+                        <th scope="col">Designation</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">TwitterLink</th>
+                        <th scope="col">InstagramLink</th>
+                        <th scope="col">Facebooklink</th>
+                        <th scope="col">Linkedin</th>
+                        <th scope="col">ImageFile</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@(counter++)</th>
+                            <td>@item.Id</td>
+                            <td>@item.FullName</td>
+                            <td>@item.Designation</td>
+                            <td>@item.Description</td>
+                            <td>@item.TwittlerLink</td>
+                            <td>@item.InstagramLink</td>
+                            <td>@item.FacebookLink</td>
+                            <td>@item.LinkedinLink</td>
+                            <td><img src="/uploads/teams/@item.ImageUrl" width="100" height="100" /></td>
+                            <td>
+                                <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-warning">Update</a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger item-delete">Delete</a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+            <div class="pagination-container">
+                @Html.PagedListPager(Model, page => Url.Action("index", new { pageIndex = page, pageSize = Model.PageSize }))
+            </div>
+          
+        </div>
+    </div>
+</div>
